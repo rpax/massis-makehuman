@@ -1,5 +1,6 @@
 FROM ikester/blender:2.76b
 
+MAINTAINER Rafael Pax <rpax@ucm.es>
 # ------------------------------------------------------------------------------
 # disable interactive functions
 ENV DEBIAN_FRONTEND noninteractive
