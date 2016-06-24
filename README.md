@@ -107,7 +107,7 @@ After clicking _Queue Download_, the zip file will be ready for download.
 
 3. (Optional) open blender and check if the animations are ok.
 
-
+![](http://i.imgur.com/or6jdzY.png)
 
 
 ### Extra: Importing to JME3.
