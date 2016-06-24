@@ -120,7 +120,25 @@ After clicking _Queue Download_, the zip file will be ready for download.
 
 Lo importas, boton derecho sobre el modelo, generate tangents, en las geometrias transparentes le das a create j3m file, y editas el j3m. Quitas las texturas alpha.
 
+Save As... -> En la carpeta de models/.../ de jme3.
 
+![](http://i.imgur.com/yv0toSQ.png)
+![](http://i.imgur.com/z3PNXpq.png)
+![](http://i.imgur.com/tX9BruU.png)
+
+![](http://i.imgur.com/DxImmL9.png)
+![](http://i.imgur.com/AKWE1XX.png)
+
+Con cada geometria:
+
+![](http://i.imgur.com/bbKRkrl.png)
+![](http://i.imgur.com/dGch5EY.png)
+![](http://i.imgur.com/L6wXgqN.png)
+
+Editamos los materiales
+
+![](http://i.imgur.com/SBJ4ZWl.png)
+![](http://i.imgur.com/YybIMXN.png)
 
 
 [1]: https://www.mixamo.com
