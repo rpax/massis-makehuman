@@ -14,7 +14,9 @@ _massis-makehuman_ is a tool for adding animations to 3D models created with [ma
  - python (2.7.11+)
  - _sidomo_ library for python
 	Can be installed via pip
+
 		sudo -H pip install 'git+https://github.com/deepgram/sidomo.git#egg=sidomo'
+		
  - MakeHuman v1.1.0
     - [Makehuman tool][2]
     - Makehuman mhx2 plugin: The preferred format for exporting makehuman models is `mhx2`.
@@ -22,12 +24,15 @@ _massis-makehuman_ is a tool for adding animations to 3D models created with [ma
         Instructions:
         Download the [compressed file from bitbucket][bb_rpax].
         Extract the contents of the folder named `9_export_mhx2` into the makehuman plugin folder. (usually, _/usr/share/makehuman/plugins_). Normally, this requires root permissions for copying. After copying it, the correct permissions can be restored like this:
+
 			sudo chmod -R ugo+r 9_export_mhx2
+			
 
 - Not required:
 	- Blender. Although it is not _really necessary_ for generating the animated models, it is needed for opening them.
-        Can be installed via pip:https://bitbucket.org/rpax/mhx2-makehuman-exchange/get/tip.zip
+	
 			sudo apt-get install blender
+			
 
 
 ## Running
