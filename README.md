@@ -37,11 +37,11 @@ Parameters:
 
 
 | Name   | Description | Additional notes|
-|--------|-------------| |
-| mhx2 | path to the mhx2 file| |
+|--------|-------------|-------------|
+| mhx2 | path to the mhx2 file| - |
 | textures| path to the textures dir| Optional, if not provided, the folder named 'textures' present in the same folder of the mhx2 file will be used instead|
-| animations| path to the animations zip file| |
-| outputfile| path to the blender output file| |
+| animations| path to the animations zip file| - |
+| outputfile| path to the blender output file| - |
 | unpack    | if the included files should be unpacked (recommended)| Not implemented yet. By default is true|
 
 
