@@ -101,11 +101,19 @@ After clicking _Queue Download_, the zip file will be ready for download.
 		docker pull rpax/massis-makehuman
 
 2. Run the script
-    $ generate.py --mhx2 <path-to-the-exported-mhx2> \
-    --animations <path-to-mixamo-animations-zip> \
-    --output <path-to-output-blend-file>
+        $ generate.py --mhx2 <path-to-the-exported-mhx2> \
+        --animations <path-to-mixamo-animations-zip> \
+        --output <path-to-output-blend-file>
 
 3. (Optional) open blender and check if the animations are ok.
+
+
+
+
+### Extra: Importing to JME3.
+
+Lo importas, boton derecho sobre el modelo, generate tangents, en las geometrias transparentes le das a create j3m file, y editas el j3m. Quitas las texturas alpha.
+
 
 
 

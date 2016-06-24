@@ -51,11 +51,11 @@ with TemporaryDirectory() as temp_dir:
         for output_line in c.run('/usr/bin/run-converter'):
             print(output_line)
 
-    #if os.path.exists(os.path.join(output_dir,'textures')):
-    #    shutil.rmtree(os.path.join(output_dir,'textures'))
+    if os.path.exists(os.path.join(output_dir,'textures')):
+        shutil.rmtree(os.path.join(output_dir,'textures'))
 
-    #shutil.copytree(os.path.join(temp_dir,'textures'),os.path.join(output_dir,'textures'))
-    #shutil.copyfile(os.path.join(temp_dir,'output.blend'),args.outputfile)
+    shutil.copytree(os.path.join(temp_dir,'textures'),os.path.join(output_dir,'textures'))
+    shutil.copyfile(os.path.join(temp_dir,'output.blend'),args.outputfile)
 
 
 
