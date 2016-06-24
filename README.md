@@ -106,6 +106,7 @@ After clicking _Queue Download_, the zip file will be ready for download.
 		docker pull rpax/massis-makehuman
 
 2. Run the script
+
         $ generate.py --mhx2 <path-to-the-exported-mhx2> \
         --animations <path-to-mixamo-animations-zip> \
         --output <path-to-output-blend-file>
