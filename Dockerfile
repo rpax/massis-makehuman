@@ -1,6 +1,29 @@
-FROM ikester/blender:2.76b
-
+#FROM ikester/blender:2.76b
+FROM ubuntu:trusty
 MAINTAINER Rafael Pax <rpax@ucm.es>
+
+ENV BLENDER_MAJOR 2.76
+ENV BLENDER_VERSION 2.76b
+ENV BLENDER_BZ2_URL http://mirror.cs.umn.edu/blender.org/release/Blender$BLENDER_MAJOR/blender-$BLENDER_VERSION-linux-glibc211-x86_64.tar.bz2
+
+RUN apt-get update && \
+	apt-get install -y \
+		curl \
+		bzip2 \
+		libfreetype6 \
+		libgl1-mesa-dev \
+		libglu1-mesa \
+		libxi6 && \
+	apt-get -y autoremove && \
+	rm -rf /var/lib/apt/lists/*
+
+RUN mkdir /usr/local/blender && \
+	curl -SL "$BLENDER_BZ2_URL" -o blender.tar.bz2 && \
+	tar -jxvf blender.tar.bz2 -C /usr/local/blender --strip-components=1 && \
+	rm blender.tar.bz2
+
+VOLUME /media
+
 # ------------------------------------------------------------------------------
 # disable interactive functions
 ENV DEBIAN_FRONTEND noninteractive
@@ -8,7 +31,7 @@ ENV DEBIAN_FRONTEND noninteractive
 ENV ADDONS_FOLDER /usr/local/blender/$BLENDER_MAJOR/scripts/addons
 
 RUN apt-get update
-RUN apt-get -y install zip unzip
+RUN apt-get -y install zip unzip makehuman
 
 # Addons & Tools
 RUN mkdir -p "$ADDONS_FOLDER"
@@ -28,11 +51,18 @@ RUN mv blendertools/makewalk "$ADDONS_FOLDER/makewalk"
 RUN rm -rf blendertools
 
 
-COPY docker-files/mixamo_to_blender.py /usr/bin/mixamo_to_blender.py
+COPY docker-files/scripts/mixamo_to_blender.py /usr/bin/mixamo_to_blender.py
 RUN chmod +x /usr/bin/mixamo_to_blender.py
 
-COPY docker-files/run-converter.sh /usr/bin/run-converter
-RUN chmod +x /usr/bin/run-converter
+COPY docker-files/animations /animations
 
-VOLUME /media
-ENTRYPOINT ["/bin/bash"]
+
+COPY docker-files/scripts/run-converter.sh /bin/run-converter
+RUN chmod 777 /bin/run-converter
+
+RUN echo "echo hello" > /bin/hello.sh
+RUN chmod +x /bin/hello.sh
+
+VOLUME /input
+VOLUME /output
+ENTRYPOINT ["/bin/run-converter"]
