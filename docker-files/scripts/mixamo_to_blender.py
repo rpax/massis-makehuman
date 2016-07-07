@@ -39,7 +39,7 @@ for mhx2_file in findfrec("/input",'mhx2'):
 	print("Processing "+mhx2_file)
 	clearscene()
 	prepareaddons()
-	
+
 	bpy.ops.import_scene.makehuman_mhx2(filepath=mhx2_file)
 	added_items=[]
 	for name in animfiles('male'):
@@ -68,11 +68,11 @@ for mhx2_file in findfrec("/input",'mhx2'):
 	ctx['selected_editable_bases'] = [scene.object_bases[ob.name] for ob in obs]
 	bpy.ops.object.join(ctx)
 
-	ftree="/".join(os.path.splitext(mhx2_file)[0].split('/')[2:])
+	ftree="/".join(os.path.splitext(mhx2_file)[0].split('/')[2:-1])
 	print("ftree: "+ftree)
 	targetfolder = '/output/'+ ftree
 	os.makedirs(targetfolder)
-	blendfilename=ntpath.basename(mhx2_file).split('/')[0]+'.blend'
+	blendfilename=os.path.splitext(os.path.basename(mhx2_file))[0]+'.blend'
 	print("bfn: "+blendfilename)
 	bpy.ops.file.pack_all()
 	bpy.ops.wm.save_as_mainfile(filepath=targetfolder+'/'+blendfilename)
@@ -83,14 +83,3 @@ for mhx2_file in findfrec("/input",'mhx2'):
 
 
 # join in one geometry
-
-
-
-
-
-
-
-
-
-
-
