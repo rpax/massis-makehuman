@@ -65,4 +65,4 @@ RUN chmod +x /bin/hello.sh
 
 VOLUME /input
 VOLUME /output
-ENTRYPOINT ["/bin/run-converter"]
+#ENTRYPOINT ["/bin/run-converter"]
