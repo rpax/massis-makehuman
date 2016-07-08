@@ -53,6 +53,10 @@ for mhx2_file in findfrec("/input",'mhx2'):
 	#bpy.ops.mcp.loop_fcurves()
 	#bpy.ops.mcp.repeat_fcurves()
 	bpy.data.objects[0].scale=mathutils.Vector((0.1000000, 0.100000, 0.100000))
+
+	# remove specular int
+	for m in bpy.data.materials : m.specular_intensity=0.0
+
 	print("joining geometries....")
 	scene = bpy.context.scene
 	obs = []
@@ -67,6 +71,12 @@ for mhx2_file in findfrec("/input",'mhx2'):
 	# we need the scene bases as well for joining
 	ctx['selected_editable_bases'] = [scene.object_bases[ob.name] for ob in obs]
 	bpy.ops.object.join(ctx)
+
+	for k in filter(lambda ob: ob.type=='MESH',bpy.data.objects):
+		ctx['active_object']=k
+		bpy.ops.object.modifier_add(type='TRIANGULATE')
+		k.modifiers['Triangulate'].quad_method='BEAUTY'
+		bpy.ops.object.modifier_apply(apply_as='DATA',modifier='Triangulate')
 
 	ftree="/".join(os.path.splitext(mhx2_file)[0].split('/')[2:-1])
 	print("ftree: "+ftree)
