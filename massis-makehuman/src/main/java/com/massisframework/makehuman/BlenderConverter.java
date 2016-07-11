@@ -30,14 +30,10 @@ public class BlenderConverter extends SimpleApplication {
 	@Override
 	public void simpleInitApp()
 	{
-		String inputFolder = System.getProperty("massis3.inputFolder");
-		String outputFolder = System.getProperty("massis3.outputFolder");
-
-		inputFolder = Paths.get(inputFolder).toFile().getAbsolutePath();
-		outputFolder = Paths.get(outputFolder).toFile().getAbsolutePath();
-
-		Path outputPath = Paths.get(outputFolder);
-
+		String workingDir = System.getProperty("massis3.workingDir");
+		workingDir = Paths.get(workingDir).toFile().getAbsolutePath();
+		Path outputPath = Paths.get(workingDir);
+		
 		assetManager.registerLocator(outputPath.toFile().getAbsolutePath(),
 				FileLocator.class);
 		try
