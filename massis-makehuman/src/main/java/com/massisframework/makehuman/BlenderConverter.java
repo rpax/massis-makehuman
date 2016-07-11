@@ -27,6 +27,7 @@ public class BlenderConverter extends SimpleApplication {
 		WORKING_DIR = System.getProperty("massis3.workingDir");
 		if (WORKING_DIR == null || WORKING_DIR.isEmpty())
 			return;
+		
 		BlenderConverter app = new BlenderConverter();
 		app.start(Type.Headless);
 	}
