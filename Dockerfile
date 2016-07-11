@@ -42,13 +42,15 @@ RUN mv blendertools/maketarget "$ADDONS_FOLDER/maketarget"
 RUN mv blendertools/makewalk "$ADDONS_FOLDER/makewalk"
 RUN rm -rf blendertools
 
+# Maven copy & build
+COPY massis-makehuman ~/massis-makehuman
+WORKDIR ~/massis-makehuman
+RUN mvn clean install
 
 COPY docker-files/scripts/mixamo_to_blender.py /usr/bin/mixamo_to_blender.py
 RUN chmod +x /usr/bin/mixamo_to_blender.py
 
 COPY docker-files/animations /animations
-
-
 COPY docker-files/scripts/run-converter.sh /bin/run-converter
 RUN chmod 777 /bin/run-converter
 
@@ -57,4 +59,6 @@ RUN chmod +x /bin/hello.sh
 
 VOLUME /input
 VOLUME /output
+
+
 ENTRYPOINT ["/bin/bash"]
