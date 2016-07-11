@@ -5,6 +5,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Handler;
+import java.util.logging.Level;
+import java.util.logging.LogManager;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import org.apache.commons.io.FilenameUtils;
@@ -15,6 +20,7 @@ import com.jme3.asset.plugins.FileLocator;
 import com.jme3.export.binary.BinaryExporter;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
+import com.jme3.scene.plugins.blender.meshes.Face;
 import com.jme3.system.JmeContext.Type;
 import com.jme3.util.TangentBinormalGenerator;
 
@@ -35,6 +41,10 @@ public class BlenderConverter extends SimpleApplication {
 	@Override
 	public void simpleInitApp()
 	{
+		LogManager.getLogManager().reset();
+		Logger globalLogger = Logger.getLogger(java.util.logging.Logger.GLOBAL_LOGGER_NAME);
+		globalLogger.setLevel(java.util.logging.Level.SEVERE);
+		
 		String workingDir = WORKING_DIR;
 		workingDir = Paths.get(workingDir).toFile().getAbsolutePath();
 		Path outputPath = Paths.get(workingDir);
@@ -43,14 +53,18 @@ public class BlenderConverter extends SimpleApplication {
 				FileLocator.class);
 		try
 		{
-
+			
 			List<String> models = Files.walk(outputPath)
 					.filter(path -> path.toString().endsWith(".blend"))
 					.map(outputPath::relativize).map(Path::toString)
 					.collect(Collectors.toList());
 
+			setClassLoggingLevel(Face.class,Level.SEVERE);
+			setClassLoggingLevel(TangentBinormalGenerator.class,Level.SEVERE);
+			
 			for (String modelP : models)
 			{
+				
 				Node n = (Node) assetManager.loadModel(modelP);
 				n = prepare(n);
 
@@ -69,6 +83,22 @@ public class BlenderConverter extends SimpleApplication {
 			e.printStackTrace();
 		}
 
+	}
+
+	private static void setClassLoggingLevel(Class<?> class1, Level lvl)
+	{
+		Logger faceLogger = Logger.getLogger(class1.getName());
+		Handler consoleHandler = new ConsoleHandler();
+		consoleHandler.setLevel(lvl);
+		faceLogger.setUseParentHandlers(false);
+		Handler[] handlers = faceLogger.getHandlers();
+		for (int i = 0; i < handlers.length; i++)
+		{
+			faceLogger.removeHandler(handlers[i]);
+		}
+		faceLogger.setLevel(lvl);
+		faceLogger.addHandler(consoleHandler);
+		
 	}
 
 	private static Node prepare(Node n)
