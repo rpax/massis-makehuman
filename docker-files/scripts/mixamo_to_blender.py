@@ -72,12 +72,12 @@ for mhx2_file in findfrec("/input",'mhx2'):
 	ctx['selected_editable_bases'] = [scene.object_bases[ob.name] for ob in obs]
 	bpy.ops.object.join(ctx)
 
-	for k in filter(lambda ob: ob.type=='MESH',bpy.data.objects):
-		ctx = bpy.context.copy()
-		ctx['active_object']=k
-		bpy.ops.object.modifier_add(type='TRIANGULATE')
-		k.modifiers['Triangulate'].quad_method='BEAUTY'
-		bpy.ops.object.modifier_apply(apply_as='DATA',modifier='Triangulate')
+	#for k in filter(lambda ob: ob.type=='MESH',bpy.data.objects):
+	#	ctx = bpy.context.copy()
+	#	ctx['active_object']=k
+	#	bpy.ops.object.modifier_add(type='TRIANGULATE')
+	#	k.modifiers['Triangulate'].quad_method='BEAUTY'
+	#	bpy.ops.object.modifier_apply(apply_as='DATA',modifier='Triangulate')
 
 	ftree="/".join(os.path.splitext(mhx2_file)[0].split('/')[2:-1])
 	print("ftree: "+ftree)
