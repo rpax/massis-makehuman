@@ -58,8 +58,6 @@ COPY docker-files/animations /animations
 COPY docker-files/scripts/run-converter.sh /bin/run-converter
 RUN chmod 777 /bin/run-converter
 
-RUN echo "echo hello" > /bin/hello.sh
-RUN chmod +x /bin/hello.sh
 
 VOLUME /input
 VOLUME /output
