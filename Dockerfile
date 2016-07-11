@@ -49,7 +49,9 @@ RUN rm -rf blendertools
 # Maven copy & build
 COPY massis-makehuman ~/massis-makehuman
 WORKDIR ~/massis-makehuman
-RUN mvn clean install
+
+# force download of everything
+RUN mvn clean install exec:java -Dexec.mainClass="com.massisframework.makehuman.BlenderConverter"
 
 COPY docker-files/scripts/mixamo_to_blender.py /usr/bin/mixamo_to_blender.py
 RUN chmod +x /usr/bin/mixamo_to_blender.py
