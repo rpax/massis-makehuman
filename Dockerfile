@@ -7,7 +7,11 @@ ENV BLENDER_MAJOR 2.76
 ENV BLENDER_VERSION 2.76b
 ENV BLENDER_BZ2_URL http://mirror.cs.umn.edu/blender.org/release/Blender$BLENDER_MAJOR/blender-$BLENDER_VERSION-linux-glibc211-x86_64.tar.bz2
 
+ENV DEBIAN_FRONTEND noninteractive
+RUN sed -i 's/# \(.*multiverse$\)/\1/g' /etc/apt/sources.list
+
 RUN apt-get update
+RUN apt-get -y upgrade
 RUN apt-get -y install zip unzip makehuman curl bzip2 libfreetype6 maven
 
 RUN mkdir /usr/local/blender
@@ -19,7 +23,7 @@ RUN	rm blender.tar.bz2
 
 # ------------------------------------------------------------------------------
 # disable interactive functions
-ENV DEBIAN_FRONTEND noninteractive
+
 
 ENV ADDONS_FOLDER /usr/local/blender/$BLENDER_MAJOR/scripts/addons
 
