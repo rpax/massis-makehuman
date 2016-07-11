@@ -12,7 +12,7 @@ RUN sed -i 's/# \(.*multiverse$\)/\1/g' /etc/apt/sources.list
 
 RUN apt-get update
 RUN apt-get -y upgrade
-RUN apt-get -y install zip unzip makehuman curl bzip2 libfreetype6 maven
+RUN apt-get -y install zip unzip curl bzip2 libfreetype6 maven
 
 RUN mkdir /usr/local/blender
 RUN curl -SL "$BLENDER_BZ2_URL" -o blender.tar.bz2
