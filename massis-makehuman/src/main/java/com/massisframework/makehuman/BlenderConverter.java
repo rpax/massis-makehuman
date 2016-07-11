@@ -61,6 +61,7 @@ public class BlenderConverter extends SimpleApplication {
 				BinaryExporter exporter = BinaryExporter.getInstance();
 				exporter.save(n, realModelFile);
 			}
+			this.stop();
 
 		} catch (Exception e)
 		{
