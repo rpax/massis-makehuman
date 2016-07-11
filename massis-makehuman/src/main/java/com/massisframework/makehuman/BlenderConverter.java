@@ -20,52 +20,68 @@ import com.jme3.util.TangentBinormalGenerator;
 
 public class BlenderConverter extends SimpleApplication {
 
-	public static void main(String[] args) {
+	private static String WORKING_DIR;
+
+	public static void main(String[] args)
+	{
+		WORKING_DIR = System.getProperty("massis3.workingDir");
+		if (WORKING_DIR == null || WORKING_DIR.isEmpty())
+			return;
 		BlenderConverter app = new BlenderConverter();
 		app.start(Type.Headless);
 	}
 
 	@Override
-	public void simpleInitApp() {
-		String workingDir = System.getProperty("massis3.workingDir");
-		if (workingDir != null && !workingDir.isEmpty()) {
-			workingDir = Paths.get(workingDir).toFile().getAbsolutePath();
-			Path outputPath = Paths.get(workingDir);
+	public void simpleInitApp()
+	{
+		String workingDir = WORKING_DIR;
+		workingDir = Paths.get(workingDir).toFile().getAbsolutePath();
+		Path outputPath = Paths.get(workingDir);
 
-			assetManager.registerLocator(outputPath.toFile().getAbsolutePath(), FileLocator.class);
-			try {
+		assetManager.registerLocator(outputPath.toFile().getAbsolutePath(),
+				FileLocator.class);
+		try
+		{
 
-				List<String> models = Files.walk(outputPath).filter(path -> path.toString().endsWith(".blend"))
-						.map(outputPath::relativize).map(Path::toString).collect(Collectors.toList());
+			List<String> models = Files.walk(outputPath)
+					.filter(path -> path.toString().endsWith(".blend"))
+					.map(outputPath::relativize).map(Path::toString)
+					.collect(Collectors.toList());
 
-				for (String modelP : models) {
-					Node n = (Node) assetManager.loadModel(modelP);
-					n = prepare(n);
+			for (String modelP : models)
+			{
+				Node n = (Node) assetManager.loadModel(modelP);
+				n = prepare(n);
 
-					// Guardamos.
-					String baseName = FilenameUtils.getBaseName(modelP);
-					File realModelFile = outputPath.resolve(modelP).getParent().resolve(baseName + ".j3o").toFile();
+				// Guardamos.
+				String baseName = FilenameUtils.getBaseName(modelP);
+				File realModelFile = outputPath.resolve(modelP).getParent()
+						.resolve(baseName + ".j3o").toFile();
 
-					BinaryExporter exporter = BinaryExporter.getInstance();
-					exporter.save(n, realModelFile);
-				}
-				this.stop();
-
-			} catch (Exception e) {
-				e.printStackTrace();
+				BinaryExporter exporter = BinaryExporter.getInstance();
+				exporter.save(n, realModelFile);
 			}
+			this.stop();
+
+		} catch (Exception e)
+		{
+			e.printStackTrace();
 		}
+
 	}
 
-	private static Node prepare(Node n) {
+	private static Node prepare(Node n)
+	{
 		Node[] wrapper = new Node[1];
 
 		n.depthFirstTraversal(s -> {
-			if (s instanceof Geometry) {
+			if (s instanceof Geometry)
+			{
 				((Geometry) s).getMaterial().clearParam("AlphaMap");
 				((Geometry) s).getMaterial().clearParam("Shininess");
 			}
-			if (s.getControl(SkeletonControl.class) != null) {
+			if (s.getControl(SkeletonControl.class) != null)
+			{
 				wrapper[0] = (Node) s;
 			}
 		});
