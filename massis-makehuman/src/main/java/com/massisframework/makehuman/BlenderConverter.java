@@ -54,7 +54,7 @@ public class BlenderConverter extends SimpleApplication {
 				Node n = (Node) assetManager.loadModel(modelP);
 				n = prepare(n);
 
-				
+			
 				String baseName = FilenameUtils.getBaseName(modelP);
 				File realModelFile = outputPath.resolve(modelP).getParent()
 						.resolve(baseName + ".j3o").toFile();
