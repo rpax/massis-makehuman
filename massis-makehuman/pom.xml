@@ -1,6 +1,144 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>com.massisframework.makehuman</groupId>
-  <artifactId>massis-makehuman</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.massisframework.makehuman</groupId>
+	<artifactId>massis-makehuman</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<jme.version>3.1.0-beta1</jme.version>
+		<jme.bulletnatives.version>3.0.10</jme.bulletnatives.version>
+		<zay-es.version>1.2.1</zay-es.version>
+		<jme.version.snapshot>3.1.0-SNAPSHOT</jme.version.snapshot>
+		<maven.legacyLocalRepo>true</maven.legacyLocalRepo>
+	</properties>
+	<repositories>
+		<repository>
+			<id>MavenCentral</id>
+			<name>Maven repository</name>
+			<url>http://repo1.maven.org/maven2</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>jme3-repo</id>
+			<name>jme3-repo</name>
+			<url>http://jcenter.bintray.com/</url>
+		</repository>
+		<repository>
+			<id>nifty-maven-repo.sourceforge.net</id>
+			<url>http://nifty-gui.sourceforge.net/nifty-maven-repo</url>
+		</repository>
+		<repository>
+			<id>simsilica-jcenter</id>
+			<url>http://dl.bintray.com/simsilica/Sim-tools</url>
+		</repository>
+	</repositories>
+	<dependencies>
+		<!-- JME -->
+
+		<dependency>
+			<groupId>org.jmonkeyengine</groupId>
+			<artifactId>jme3-android</artifactId>
+			<version>${jme.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jmonkeyengine</groupId>
+			<artifactId>jme3-blender</artifactId>
+			<version>${jme.version}</version>
+		</dependency>
+		<!-- ====================================================== -->
+		<!-- TODO FIND 3.1.0 bullet natives -->
+		<!-- ====================================================== -->
+		<dependency>
+			<groupId>org.jmonkeyengine</groupId>
+			<artifactId>jme3-bullet-native</artifactId>
+			<version>${jme.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jmonkeyengine</groupId>
+			<artifactId>jme3-bullet</artifactId>
+			<version>${jme.version}</version>
+		</dependency>
+		<!-- ====================================================== -->
+		<!-- TODO FIND 3.1.0 bullet natives -->
+		<!-- ====================================================== -->
+
+		<dependency>
+			<groupId>org.jmonkeyengine</groupId>
+			<artifactId>jme3-core</artifactId>
+			<version>${jme.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jmonkeyengine</groupId>
+			<artifactId>jme3-desktop</artifactId>
+			<version>${jme.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jmonkeyengine</groupId>
+			<artifactId>jme3-effects</artifactId>
+			<version>${jme.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jmonkeyengine</groupId>
+			<artifactId>jme3-jogg</artifactId>
+			<version>${jme.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jmonkeyengine</groupId>
+			<artifactId>jme3-jogl</artifactId>
+			<version>${jme.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jmonkeyengine</groupId>
+			<artifactId>jme3-lwjgl</artifactId>
+			<version>${jme.version}</version>
+		</dependency>
+		<!-- <dependency> <groupId>org.jmonkeyengine</groupId> <artifactId>jme3-lwjgl3</artifactId> 
+			<version>${jme.version}</version> </dependency> -->
+		<dependency>
+			<groupId>org.jmonkeyengine</groupId>
+			<artifactId>jme3-networking</artifactId>
+			<version>${jme.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jmonkeyengine</groupId>
+			<artifactId>jme3-niftygui</artifactId>
+			<version>${jme.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jmonkeyengine</groupId>
+			<artifactId>jme3-plugins</artifactId>
+			<version>${jme.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jmonkeyengine</groupId>
+			<artifactId>jme3-terrain</artifactId>
+			<version>${jme.version}</version>
+		</dependency>
+		<!-- /JME -->
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.5</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.4</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.7</version>
+		</dependency>
+	</dependencies>
 </project>
