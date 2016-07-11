@@ -73,6 +73,7 @@ for mhx2_file in findfrec("/input",'mhx2'):
 	bpy.ops.object.join(ctx)
 
 	for k in filter(lambda ob: ob.type=='MESH',bpy.data.objects):
+		ctx = bpy.context.copy()
 		ctx['active_object']=k
 		bpy.ops.object.modifier_add(type='TRIANGULATE')
 		k.modifiers['Triangulate'].quad_method='BEAUTY'
