@@ -39,15 +39,15 @@ for mhx2_file in findfrec("/input",'mhx2'):
 	print("Processing "+mhx2_file)
 	clearscene()
 	prepareaddons()
-
+	mhxgender=os.path.splitext(os.path.basename(mhx2_file))[0].split('-')[0]
 	bpy.ops.import_scene.makehuman_mhx2(filepath=mhx2_file)
 	added_items=[]
-	for name in animfiles('male'):
+	for name in animfiles(mhxgender):
 		bpy.ops.mcp.load_and_retarget(filepath=name)
 		for element in bpy.data.actions:
 			if element not in added_items:
 				print("Adding "+element.name)
-				element.name=os.path.splitext(name)[0]
+				element.name=os.path.splitext(os.path.basename(name))[0]
 				added_items.append(element)
 				break
 	#bpy.ops.mcp.loop_fcurves()
