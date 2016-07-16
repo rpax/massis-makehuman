@@ -23,6 +23,7 @@ import com.jme3.scene.Node;
 import com.jme3.scene.plugins.blender.meshes.Face;
 import com.jme3.system.JmeContext.Type;
 import com.jme3.util.TangentBinormalGenerator;
+import com.massisframework.massis3.util.optimize.FastLodGenerator;
 
 public class BlenderConverter extends SimpleApplication {
 
@@ -73,6 +74,8 @@ public class BlenderConverter extends SimpleApplication {
 				File realModelFile = outputPath.resolve(modelP).getParent()
 						.resolve(baseName + ".j3o").toFile();
 
+				//Generate LODS
+				FastLodGenerator.bakeLodControls(n, true, 1, 0.1f,0.2f,0.4f,0.8f);
 				BinaryExporter exporter = BinaryExporter.getInstance();
 				exporter.save(n, realModelFile);
 			}
