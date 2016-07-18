@@ -58,6 +58,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Future;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.StreamSupport;
@@ -1343,15 +1346,19 @@ public class FastLodGenerator {
 		return false;
 	}
 
-	private static ThreadLocal<List<Geometry>> lodControlsListTL = ThreadLocal
+	/**
+	 * <b>Only</b> for using in
+	 * {@link #bakeLodControls(Spatial, float, ExecutorService, float...)}
+	 */
+	private static ThreadLocal<List<Future<?>>> bakeLodControlsListTL = ThreadLocal
 			.withInitial(ArrayList::new);
 
-	public static void bakeLodControls(Spatial sp, boolean parallel,
-			float distTolerance, float... reductionValues)
+	public static void bakeLodControls(Spatial sp,float distTolerance,ExecutorService executor,float... reductionValues)
 	{
-		List<Geometry> geoms = lodControlsListTL.get();
-		geoms.clear();
-		GeometryBatchFactory.gatherGeoms(sp, geoms);
+		
+		
+		
+		
 		StreamSupport.stream(geoms.spliterator(), parallel).forEach(geom -> {
 			Logger.getLogger(FastLodGenerator.class.getName()).info("Baking geometry "+geom);
 			FastLodGenerator flg = new FastLodGenerator(geom);

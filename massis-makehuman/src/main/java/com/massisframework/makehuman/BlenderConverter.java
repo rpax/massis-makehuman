@@ -75,7 +75,7 @@ public class BlenderConverter extends SimpleApplication {
 						.resolve(baseName + ".j3o").toFile();
 
 				//Generate LODS
-				FastLodGenerator.bakeLodControls(n, true, 1, 0.1f,0.2f,0.4f,0.8f);
+				FastLodGenerator.bakeLodControls(n, true, 0.8f,0.9f);
 				BinaryExporter exporter = BinaryExporter.getInstance();
 				exporter.save(n, realModelFile);
 			}
