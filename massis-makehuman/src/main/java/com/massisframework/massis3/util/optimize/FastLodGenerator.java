@@ -58,12 +58,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
+import java.util.function.Consumer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.StreamSupport;
 
 import com.jme3.bounding.BoundingSphere;
 import com.jme3.math.Vector3f;
@@ -71,7 +71,6 @@ import com.jme3.scene.Geometry;
 import com.jme3.scene.Mesh;
 import com.jme3.scene.Spatial;
 import com.jme3.scene.VertexBuffer;
-import com.jme3.scene.control.LodControl;
 import com.jme3.util.BufferUtils;
 
 import jme3tools.optimize.GeometryBatchFactory;
@@ -1346,27 +1345,64 @@ public class FastLodGenerator {
 		return false;
 	}
 
-	/**
-	 * <b>Only</b> for using in
-	 * {@link #bakeLodControls(Spatial, float, ExecutorService, float...)}
-	 */
-	private static ThreadLocal<List<Future<?>>> bakeLodControlsListTL = ThreadLocal
-			.withInitial(ArrayList::new);
+	
 
-	public static void bakeLodControls(Spatial sp,float distTolerance,ExecutorService executor,float... reductionValues)
+	public static void bakeAllLods(Spatial sp, float distTolerance,
+			float... reductionValues)
 	{
-		
-		
-		
-		
-		StreamSupport.stream(geoms.spliterator(), parallel).forEach(geom -> {
-			Logger.getLogger(FastLodGenerator.class.getName()).info("Baking geometry "+geom);
-			FastLodGenerator flg = new FastLodGenerator(geom);
-			flg.bakeLods(TriangleReductionMethod.PROPORTIONAL, reductionValues);
-			LodControl lC = new LodControl();
-			lC.setDistTolerance(distTolerance);
-			geom.addControl(lC);
-		});
+		bakeAllLods(sp, distTolerance, null, reductionValues);
+	}
+	
+	private static ThreadLocal<List<Geometry>> bakeAllLodsGeomsTL = ThreadLocal
+			.withInitial(ArrayList::new);
+	public static void bakeAllLods(Spatial sp, float distTolerance,
+			ExecutorService executor, float... reductionValues)
+	{
 
+		List<Geometry> geoms = bakeAllLodsGeomsTL.get();
+		geoms.clear();
+		GeometryBatchFactory.gatherGeoms(sp, geoms);
+		Consumer<Geometry> action = geom -> {
+			Logger.getLogger(FastLodGenerator.class.getName())
+					.info("Baking geometry " + geom);
+			FastLodGenerator flg = new FastLodGenerator(geom);
+			flg.bakeLods(TriangleReductionMethod.PROPORTIONAL,
+					reductionValues);
+		};
+
+		if (executor != null)
+		{
+			try
+			{
+				applyInParallel(geoms, executor, action);
+			} catch (InterruptedException | ExecutionException e)
+			{
+				throw new RuntimeException();
+			}
+		} else
+		{
+			geoms.forEach(action);
+		}
+
+	}
+
+	private static <T> void applyInParallel(Iterable<T> items,
+			ExecutorService executor,
+			Consumer<T> action)
+			throws InterruptedException, ExecutionException
+	{
+		List<Future<?>> futures = new ArrayList<>();
+
+		items.forEach(item -> {
+			Future<?> f = executor.submit(() -> {
+				action.accept(item);
+				return null;
+			});
+			futures.add(f);
+		});
+		for (Future<?> future : futures)
+		{
+			future.get();
+		}
 	}
 }
