@@ -12,10 +12,11 @@ RUN sed -i 's/# \(.*multiverse$\)/\1/g' /etc/apt/sources.list
 
 RUN apt-get update
 RUN apt-get -y upgrade
-RUN apt-get -y install unzip zip curl bzip2 libfreetype6 maven
+RUN apt-get -y install unzip zip curl bzip2 libfreetype6 maven aria2
 
 RUN mkdir /usr/local/blender
-RUN curl -SL "$BLENDER_BZ2_URL" -o blender.tar.bz2
+#RUN curl -SL "$BLENDER_BZ2_URL" -o blender.tar.bz2
+RUN aria2c -x16 "$BLENDER_BZ2_URL" -o blender.tar.bz2
 RUN tar -jxvf blender.tar.bz2 -C /usr/local/blender --strip-components=1
 RUN	rm blender.tar.bz2
 
@@ -31,14 +32,16 @@ ENV ADDONS_FOLDER /usr/local/blender/$BLENDER_MAJOR/scripts/addons
 
 # Addons & Tools
 RUN mkdir -p "$ADDONS_FOLDER"
-RUN curl --remote-name https://bitbucket.org/rpax/mhx2-makehuman-exchange/get/tip.zip
+#RUN curl --remote-name https://bitbucket.org/rpax/mhx2-makehuman-exchange/get/tip.zip
+RUN aria2c -x16 https://bitbucket.org/rpax/mhx2-makehuman-exchange/get/tip.zip -o tip.zip
 RUN unzip tip.zip
 RUN rm tip.zip
 RUN mv rpax-mhx2-makehuman-exchange-5971f82e50f3/import_runtime_mhx2 "$ADDONS_FOLDER/import_runtime_mhx2"
 RUN rm -rf rpax-mhx2-makehuman-exchange-5971f82e50f3
 
 # makehuman blender tools
-RUN curl --remote-name http://download.tuxfamily.org/makehuman/releases/1.1.0/blendertools-1.1.0-all.zip
+#RUN curl --remote-name http://download.tuxfamily.org/makehuman/releases/1.1.0/blendertools-1.1.0-all.zip
+RUN aria2c -x16 http://download.tuxfamily.org/makehuman/releases/1.1.0/blendertools-1.1.0-all.zip -o blendertools-1.1.0-all.zip
 RUN unzip blendertools-1.1.0-all.zip
 RUN rm blendertools-1.1.0-all.zip
 RUN mv blendertools/makeclothes "$ADDONS_FOLDER/makeclothes"

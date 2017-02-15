@@ -35,7 +35,7 @@ def animfiles(gender):
 
 
 #for mhx2_file in findfrec("/input",'mhx2'):
-mhx2_file=sys.argv[0]
+mhx2_file=sys.argv[-1]
 bpy.ops.wm.read_homefile()
 print("Processing "+mhx2_file)
 clearscene()
