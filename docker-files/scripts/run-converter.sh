@@ -7,7 +7,9 @@ if [[ "$1" != "" ]]; then
 else
     nThreads=1
 fi
-find /input -name "*.mhx2" | xargs realpath | xargs echo "HOLA "
+
+echo "Running with $nThreads threads"
+
 rm -rf /output/*
 find /input -name "*.mhx2" \
 | xargs realpath \

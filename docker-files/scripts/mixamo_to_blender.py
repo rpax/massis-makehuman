@@ -83,7 +83,7 @@ bpy.ops.object.join(ctx)
 ftree="/".join(os.path.splitext(mhx2_file)[0].split('/')[2:-1])
 print("ftree: "+ftree)
 targetfolder = '/output/'+ ftree
-os.makedirs(targetfolder)
+os.makedirs(targetfolder,exist_ok=True)
 blendfilename=os.path.splitext(os.path.basename(mhx2_file))[0]+'.blend'
 print("bfn: "+blendfilename)
 bpy.ops.file.pack_all()
