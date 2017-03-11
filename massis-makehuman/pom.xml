@@ -8,7 +8,10 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
-		<jme.version>3.1.0-stable</jme.version>
+		<jme.version>3.1.0-beta1</jme.version>
+		<jme.bulletnatives.version>3.0.10</jme.bulletnatives.version>
+		<zay-es.version>1.2.1</zay-es.version>
+		<jme.version.snapshot>3.1.0-SNAPSHOT</jme.version.snapshot>
 		<maven.legacyLocalRepo>true</maven.legacyLocalRepo>
 	</properties>
 	<repositories>
@@ -27,6 +30,10 @@
 			<id>jme3-repo</id>
 			<name>jme3-repo</name>
 			<url>http://jcenter.bintray.com/</url>
+		</repository>
+		<repository>
+			<id>simsilica-jcenter</id>
+			<url>http://dl.bintray.com/simsilica/Sim-tools</url>
 		</repository>
 	</repositories>
 	<dependencies>
