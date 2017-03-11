@@ -56,11 +56,11 @@ RUN mvn clean install exec:java -Dexec.mainClass="com.massisframework.makehuman.
 COPY docker-files/scripts/mixamo_to_blender.py /usr/bin/mixamo_to_blender.py
 RUN chmod +x /usr/bin/mixamo_to_blender.py
 
-COPY docker-files/animations /animations
+#COPY docker-files/animations /animations
 COPY docker-files/scripts/run-converter.sh /bin/run-converter
 RUN chmod 777 /bin/run-converter
 
-
+VOLUME /animations
 VOLUME /input
 VOLUME /output
 
