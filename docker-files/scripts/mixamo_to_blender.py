@@ -82,12 +82,15 @@ for mhx2_file in findfrec("/input",'mhx2'):
 	ftree="/".join(os.path.splitext(mhx2_file)[0].split('/')[2:-1])
 	print("ftree: "+ftree)
 	targetfolder = '/output/'+ ftree
-	os.makedirs(targetfolder)
+	#os.makedirs(targetfolder)
 	blendfilename=os.path.splitext(os.path.basename(mhx2_file))[0]+'.blend'
 	print("bfn: "+blendfilename)
 	bpy.ops.file.pack_all()
-	bpy.ops.wm.save_as_mainfile(filepath=targetfolder+'/'+blendfilename)
-	bpy.ops.file.unpack_all(method='WRITE_LOCAL')
+	bpy.ops.wm.save_as_mainfile(filepath='/output/'+blendfilename)
+	bpy.ops.file.autopack_toggle()
+	bpy.ops.file.unpack_all()
+	bpy.ops.file.make_paths_relative()
+	bpy.ops.wm.save_as_mainfile()
 
 #######################################
 
