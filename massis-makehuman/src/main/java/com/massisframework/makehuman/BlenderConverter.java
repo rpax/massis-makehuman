@@ -17,7 +17,9 @@ import org.apache.commons.io.FilenameUtils;
 import com.jme3.animation.SkeletonControl;
 import com.jme3.app.SimpleApplication;
 import com.jme3.asset.plugins.FileLocator;
+import com.jme3.bounding.BoundingBox;
 import com.jme3.export.binary.BinaryExporter;
+import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.plugins.blender.meshes.Face;
@@ -66,8 +68,8 @@ public class BlenderConverter extends SimpleApplication {
 			for (String modelP : models)
 			{
 				
-				Node n = (Node) assetManager.loadModel(modelP);
-				n = prepare(n);
+				Node sp = (Node) assetManager.loadModel(modelP);
+				sp = prepare(sp);
 
 			
 				String baseName = FilenameUtils.getBaseName(modelP);
@@ -75,8 +77,16 @@ public class BlenderConverter extends SimpleApplication {
 						.resolve(baseName + ".j3o").toFile();
 
 				//Generate LODS -> disable
-				FastLodGenerator.bakeAllLods(n, 1, 0.7f,0.8f,0.9f);
+				FastLodGenerator.bakeAllLods(sp, 1, 0.7f,0.8f,0.9f);
 				BinaryExporter exporter = BinaryExporter.getInstance();
+				
+				Node n = new Node();
+				sp.setLocalScale(0.1f);
+				Vector3f center = ((BoundingBox) sp.getWorldBound()).getCenter();
+				Vector3f offset = sp.getLocalTranslation().subtract(center);
+				sp.setLocalTranslation(sp.getLocalTranslation().add(offset));
+				n.attachChild(sp);
+				
 				exporter.save(n, realModelFile);
 			}
 			this.stop();
