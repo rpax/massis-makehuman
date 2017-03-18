@@ -84,7 +84,7 @@ public class BlenderConverter extends SimpleApplication {
 				sp.setLocalScale(0.1f);
 				Vector3f center = ((BoundingBox) sp.getWorldBound()).getCenter();
 				Vector3f offset = sp.getLocalTranslation().subtract(center);
-				sp.setLocalTranslation(sp.getLocalTranslation().add(offset));
+				sp.setLocalTranslation(offset);
 				n.attachChild(sp);
 				
 				exporter.save(n, realModelFile);
